@@ -1,0 +1,10 @@
+<!doctype html>
+<textarea id="texta" style="width:300px;" ></textarea>
+<br>
+<script>
+   texta.value = localStorage.getItem('texta');
+   texta.oninput = () => {
+   localStorage.setItem('texta', texta.value)
+   };
+</script>
+
