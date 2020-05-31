@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+	
+ <style>
+   body {
+    background-image: url(./893Z.png); 
+    background-color: #c7b39b; 
+   }
+  </style>
+  
+  <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function() {
+          navigator.serviceWorker.register("/sw.js");
+        });
+      }
+
+      function notifyMe() {
+	   localStorage.clear();
+        const dictionary = [
+		    "Я - хлеп, живу в Хлепнице.",
+			"Жрешь???",
+			"Проголодался?",
+			"Ъуъ!",    
+			"Если бы не микролапы,я бы уже раскромсал хлебушек"];
+		var textik = dictionary[getRandomInt(0,4)];
+        var notification = new Notification("BakeryCat", {
+          tag: "ache-mail",
+          body: textik,
+          icon: "https://sun9-65.userapi.com/6TktvWSmSClapr82crXoI3qJE34Z3nlsX3BPng/RWItuBtiseo.jpg"
+        });
+        localStorage.setItem(
+          "text",
+          localStorage.getItem("text") + " " + textik
+        );
+        console.log(localStorage.getItem("text"));
+      }
+
+      function notifSet() {
+        if (!("Notification" in window))
+          alert("Ваш браузер не поддерживает уведомления.");
+        else if (Notification.permission === "granted")
+          setInterval(notifyMe, 5000);
+        else if (Notification.permission !== "denied") {
+          Notification.requestPermission(function(permission) {
+            if (!("permission" in Notification))
+              Notification.permission = permission;
+            if (permission === "granted") setInterval(notifyMe, 5000);
+          });
+        }
+      }
+
+    function getRandomInt() {
+      return Math.floor(Math.random() * Math.floor(5));
+    }
+    </script>
+	
+  </head>
+  <body onload="setTimeout(notifSet(), getRandomInt(1000,10000));">
+    <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+</html>
